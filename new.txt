@@ -1,0 +1,10 @@
+创建分支 git checkout -b dev
+git add 文件
+git commit -m"说明"
+换主支 git checkout master
+合并 git merge dev
+删除分支 git branch -d dev
+上传文件 git push origin master
+
+删除远程分支（如果这个分支名称是：dev）
+git push origin :dev
