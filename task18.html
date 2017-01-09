@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="gb2312">
+	<title>task18</title>
+	<style type="text/css">
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output,section, summary,time, mark, audio, video {
+    margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;}
+div{
+  margin-right: 10px;
+  background-color: red;
+  min-width: 40px;
+  height: 35px;
+  color: #FFF;
+  display: inline-block;
+  text-align: center;
+  line-height: 35px;
+  font-weight: bold;
+}
+button{
+	display: inline-block;
+	font-size: 0.9em;
+	font-family: "黑体";
+	border: 1px solid #E7E7E7;
+    border-radius: 5px;
+    padding: 2px 8px;
+    cursor: pointer;
+    background-color: #FFF;
+}
+button#right-in{
+	margin-right: 15px;
+}
+header,section{margin:5px}
+section div{
+	cursor: pointer;
+}
+	</style>
+</head>
+<body>
+	<header>
+		<input type="text" name="getnum" id="getnum">
+        <button id="left-in">左侧入</button>
+        <button id="right-in">右侧入</button>
+        <button id="left-out">左侧出</button>
+        <button id="right-out">右侧出</button>
+	</header>
+	<section id="container">
+<!-- 	    <div>10</div>
+		<div>3</div>
+		<div>7</div>
+		<div>12</div>
+		<div>11</div>
+		<div>30</div> -->
+	</section>
+	<script>
+	function validate(text) {
+      return  /^\d{1,8}$/.test(text);
+	}
+	/*获取ID*/
+	function getId(id) {
+		return document.getElementById(id);
+	}
+
+	/*清空输入框*/
+    function empty () {
+        getnum.value = "";
+    }
+
+	/*左侧入事件*/
+	function LeftIn () {  
+		var text = getnum.value;
+	    //创建新盒子
+	    var newbox = document.createElement("div");
+	    newbox.innerHTML = text;
+	    if (!validate(text)) {
+           alert('输入错误！');
+           empty();
+	    }
+	    else {
+    		var firstEle = container.firstChild;
+			if (firstEle) {
+		    	container.insertBefore(newbox, firstEle);
+		    } 
+		    else {
+		    	container.innerHTML = "<div>" + text + "</div>";
+		    }
+	    empty();
+	    }    
+	}
+
+	/*右侧入事件*/
+    function RightIn () {
+		var text = getnum.value;
+		    if (!validate(text)) { 
+		    	alert('输入错误！');
+		    	empty();
+		    	}
+	    	else {container.innerHTML += "<div>" + text + "</div>";}
+	    empty();
+    }
+
+    /*左侧出事件*/
+    function LeftOut () {
+    	var firstEle = container.getElementsByTagName("div")[0];
+    	if(!firstEle) { alert('大兄弟，没东西可出啦！') }
+		else {
+    		alert(firstEle.innerHTML);
+    		container.removeChild(firstEle);}
+	    }
+    
+    /*右侧出事件*/
+    function RightOut () {
+    	var boxs = container.getElementsByTagName("div");
+    	var lastEle = boxs[boxs.length-1];
+    	if (!lastEle) { alert('大兄弟，没东西可出啦！') }
+		else{
+    		alert(lastEle.innerHTML);
+    		container.removeChild(lastEle);}
+	    }
+
+	var left_in = getId("left-in"),
+	    right_in = getId("right-in"),
+	    left_out = getId("left-out"),
+	    right_out = getId("right-out"),
+	    getnum = getId("getnum"),
+	    container = getId("container");
+		left_in.onclick = LeftIn;
+		right_in.onclick = RightIn;	
+		left_out.onclick = LeftOut;
+		right_out.onclick = RightOut;
+
+    /*事件委托：删除当前元素*/
+    container.onclick = function (e) {
+    	container.removeChild(e.target);
+    }
+	</script>
+</body>
+</html>
